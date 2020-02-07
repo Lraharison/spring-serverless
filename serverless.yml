@@ -1,0 +1,32 @@
+service: spring-server-less
+
+provider:
+  name: aws
+  runtime: java8
+  memorySize: 512
+  region: ca-central-1
+
+
+package:
+  artifact: target/spring-server-less-0.0.1-SNAPSHOT-aws.jar
+
+functions:
+  sum:
+    handler: org.cyranno.springserverless.CloudRequestHandler
+    timeout: 60
+    events:
+      - http:
+          path: /sum
+          method: post
+    environment:
+      FUNCTION_NAME: sum
+
+  stringReverse:
+    handler: org.cyranno.springserverless.CloudRequestHandler
+    timeout: 60
+    events:
+      - http:
+          path: /reverse/{str}
+          method: get
+    environment:
+      FUNCTION_NAME: stringReverse
